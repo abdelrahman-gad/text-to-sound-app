@@ -1,0 +1,24 @@
+{
+  "name": "type_to_speak",
+  "version": "1.0.0",
+  "description": "text to to sound converting ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs": "./node_modules/.bin/jsdoc -c jsdoc.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abdelrahmangadgithub/text-to-sound-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abdelrahmangadgithub/text-to-sound-app/issues"
+  },
+  "homepage": "https://github.com/abdelrahmangadgithub/text-to-sound-app#readme",
+  "devDependencies": {
+    "better-docs": "^1.1.6",
+    "jsdoc": "^3.5.5"
+  }
+}

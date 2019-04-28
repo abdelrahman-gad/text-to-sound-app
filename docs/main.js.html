@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: main.js</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                    
+                        <h1 class="navbar-item">Documentation</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Events</h3><ul><li><a href="global.html#event:change">change</a></li><li><a href="global.html#event:submit">submit</a></li></ul><h3>Global</h3><ul><li><a href="global.html#getVoices">getVoices</a></li><li><a href="global.html">option</a></li><li><a href="global.html#pitch">pitch</a></li><li><a href="global.html#pitchValue">pitchValue</a></li><li><a href="global.html#rate">rate</a></li><li><a href="global.html#rateValue">rateValue</a></li><li><a href="global.html#setAttribute">setAttribute</a></li><li><a href="global.html#speak">speak</a></li><li><a href="global.html#speakText">speakText</a></li><li><a href="global.html#synth">synth</a></li><li><a href="global.html#textForm">textForm</a></li><li><a href="global.html#textInput">textInput</a></li><li><a href="global.html#voices">voices</a></li><li><a href="global.html#voiceSelect">voiceSelect</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>main.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// Init speach synth api
+/**
+ *  @description this object handles speach matters
+ *  @constant
+ *  @name synth
+ *  @global
+ *  @type {Object}
+ */
+const synth = window.speechSynthesis;
+
+// DOM Elements
+/**
+ *  @description form DOM
+ *  @constant
+ *  @name textForm
+ *  @global
+ *  @type {Object}
+ */
+const textForm = document.querySelector("form");
+/**
+ *  @description form text input DOM
+ *  @constant
+ *  @name textInput
+ *  @global
+ *  @type {Object}
+ */
+const textInput = document.querySelector("#text-input");
+
+/**
+ *  @description form select option input specifies the pronoucing voice
+ *  @constant
+ *  @name voiceSelect
+ *  @global
+ *  @type {Object}
+ */
+const voiceSelect = document.querySelector("#voice-select");
+
+/**
+ *  @description form rating input enables user to select the rate of the voice
+ *  @constant
+ *  @name rate
+ *  @global
+ *  @type {Object}
+ */
+const rate = document.querySelector("#rate");
+
+/**
+ *  @description form rating label shows the rate value of the voice
+ *  @constant
+ *  @name rateValue
+ *  @global
+ *  @type {Object}
+ */
+const rateValue = document.querySelector("#rate-value");
+/**
+ *  @description form rating input enables user to select the pitch of the voice
+ *  @constant
+ *  @name pitch
+ *  @global
+ *  @type {Object}
+ */
+const pitch = document.querySelector("#pitch");
+/**
+ *  @description form rating label shows the pitch value of the voice
+ *  @constant
+ *  @name pitchValue
+ *  @global
+ *  @type {Object}
+ */
+const pitchValue = document.querySelector("#pitch-value");
+
+/**
+ *  @description body html object model
+ *  @constant
+ *  @name pitchValue
+ *  @global
+ *  @type {Object}
+ */
+const body = document.querySelector("body");
+
+/**
+ * @description array of all available voices that user can selesct from
+ * @global
+ * @name voices
+ * @type {SpeechSynthesisVoice[]}
+ */
+let voices = [];
+
+/**
+ * @description fetches all voices  from the {@link synth} object and populate the DOM {@link voiceSelect } element
+ * @function
+ * @name getVoices
+ *  */
+const getVoices = () => {
+  voices = synth.getVoices();
+  // loop throw voices
+  //   console.log(voices);
+  /**
+   * @description hieghr order array function loops throw each element in the {@link voices} array and does specific funcion
+   * @function
+   * @inner
+   * @param {funcion}
+   */
+  voices.forEach(voice => {
+    /**
+     * @description create option element
+     * @constant
+     * @inner
+     * @name option
+     * */
+
+    const option = document.createElement("option");
+
+    /**
+     * @description fill the {@link option} with {@link voice} name and language
+     * @name option.textContent
+     * @attribute -
+     */
+
+    option.textContent = voice.name + "(" + voice.lang + ")";
+
+    /**
+     * @description set needed option attributes (custom-attribute)
+     * @function
+     * @name setAttribute
+     * @param {string} "data-name" -custom attribute name
+     * @param {string}  voice.name - name property of object {@link voice }
+     */
+    option.setAttribute("data-name", voice.name);
+    /**
+     * @description set needed {@link option} attributes (custom-attribute)
+     * @function
+     * @name setAttribute
+     * @param {string} "data-name" -custom attribute lang
+     * @param {string}  voice.lang - name property of object {@link voice }
+     */
+    option.setAttribute("data-lang", voice.lang);
+    /**
+     * @description appending  {@link option }s  child  DOM elements to parent {@link voiceSelect}  DOM element
+     * @name voiceSelect.appendChild
+     * @param {Object} -HTML DOM  element {@link option}
+     * @function
+     */
+
+    voiceSelect.appendChild(option);
+  });
+};
+
+/**
+ * @description run {@link getVoices } funcion if {@link synth}.{@link onvoiceschanged} event is not undefined
+ */
+if (synth.onvoiceschanged !== undefined) {
+  synth.onvoiceschanged = getVoices;
+}
+
+/**
+ * @description transform {@link textInput} into {@link voice}
+ * @function
+ * @name speak
+ * @listens event:change,submit
+ * @global
+ */
+const speak = () => {
+  if (synth.speaking) {
+    /**
+     * @description  testing function
+     */
+    console.log(synth.speaking);
+    console.error("Already Speakin ...");
+
+    return;
+  }
+  //   textInput.value = "hello guys";
+  /**
+   * @description change css styles during speakin
+   */
+  if (textInput.value !== "") {
+    body.style.background = "#141414 url(src/img/wave.gif)";
+    body.style.background.repeat = "repeat-x";
+    body.style.backgroundSize = "100% 55%";
+    body.style.backgroundPosition = "0 20%";
+    /**
+     * @description -instantiat an instance from the class {@link SpeechSynthesisUtterance}
+     *              -passing string {@link textInput}.value
+     *
+     * @constant
+     * @name speakText
+     */
+
+    const speakText = new SpeechSynthesisUtterance(textInput.value);
+
+    // console.log(speakText);
+    // get speak end
+
+    speakText.onend = e => {
+      console.log("speaking done ....");
+      body.style.background = "#141414";
+    };
+
+    speakText.onerror = e => {
+      console.err("Error had happened ... ");
+    };
+
+    //console.log(voiceSelect[0]);
+
+    // selected voice
+    const selectedVoice = voiceSelect[0].getAttribute("data-name");
+
+    voices.forEach(voice => {
+      if (voice.name === selectedVoice) {
+        speakText.voice = voice;
+      }
+    });
+    // set pitch and rate
+    speakText.rate = rate.value;
+    speakText.pitch = pitch.value;
+
+    // speak
+    synth.speak(speakText);
+  }
+};
+// EVENT LISTENERS
+
+/**
+ * @description firing {@link speak} function on submitting the form {@link textForm}
+ * @name textForm.addEventListener
+ * @function
+ * @global
+ * @event submit
+ * @param {string} change  name of event
+ * @param {function} anonymous function is fired when the event happend
+ *  */
+textForm.addEventListener("submit", e => {
+  e.preventDefault();
+  speak();
+  textInput.blur();
+});
+
+/**
+ * @description firing {@link speak} function on submitting the rate {@link rate} DOM element
+ * @name rate.addEventListener
+ * @function
+ * @global
+ * @event change
+ * @param {string} change  name of event
+ * @param {function} anonymous function is fired when the event happend
+ *  */
+
+rate.addEventListener("change", e => (rateValue.textContent = rate.value));
+
+/**
+ * @description firing {@link speak} function on submitting the form {@link pitch} DOM element
+ * @name rate.addEventListener
+ * @function
+ * @global
+ * @event change
+ * @param {string} change  name of event
+ * @param {function} anonymous function is fired when the event happend
+ *  */
+
+rate.addEventListener("change", e => (pitchValue.textContent = pitch.value));
+/**
+ * @description firing {@link speak} function on submitting the form {@link voiceSelect} DOM element
+ * @name voiceSelect.addEventListener
+ * @function
+ * @global
+ * @event change
+ * @param {string} change  name of event
+ * @param {function} anonymous function is fired when the event happend
+ *  */
+
+voiceSelect.addEventListener("change", e => speak());
+
+// three main critical objects 1-synth.speak(speakText);
+//                             2-speakText = new SpeechSynthesisUtterance(textInput.value);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Apr 28 2019 17:36:17 GMT+0300 (GMT+03:00)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+        </p>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
